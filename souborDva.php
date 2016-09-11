@@ -8,8 +8,7 @@
 
 <?php
 /*$conn = $sql = $add = null;*/
-if(isset($_post['add']))
- {
+if(array_key_exists("add", $_POST)){
       $servername = "localhost";
       $username = "root";
       $password = "";
@@ -24,18 +23,10 @@ if(isset($_post['add']))
           }
 
       // definovani promenych pro naplneni databaze
-      if(! get_magic_quotes_gpc() ) 
-	       {
-	       $jmeno = addslashes ($_post['jmeno']);
-	       $prijmeni = addslashes ($_post['id_person']);
-	       $pozice = addslashes ($_post['pozice']);
-	       } 
-	  else {
-	        $jmeno = ($_post['jmeno']);
-	        $prijmeni = ($_post['id_person']);
-	        $pozice = ($_post['pozice']);
-	        $id_person = $_post['id_person'];
-           }
+     $jmeno     = $_POST['jmeno'];
+         $prijmeni  = $_POST['id_person'];
+        $pozice    = $_POST['pozice'];
+        $id_person = $_POST['id_person'];
 	   // vkladani dat to databaze
 
        $sql = "insert into person (id, jmeno, prijmeni, pozice)
@@ -43,12 +34,12 @@ if(isset($_post['add']))
 
 
 
-        mysqli_select_db('objednavky');
-        $retval = mysqli_query( $sql, $conn );
+        mysqli_select_db($conn, 'objednavky');
+        $retval = mysqli_query($conn, $sql );
             
         if(! $retval ) 
 		    {
-               die('Could not enter data: ' . mysql_error());
+               die('Could not enter data: ' . mysql_error($retval));
             }
             
             echo "Entered data successfully\n";
@@ -60,7 +51,7 @@ if(isset($_post['add']))
             ?>
 
 
-<form method = "post" action = "<?php $_PHP_SELF ?>">
+<<form method = "post" action = "">
                   <table width = "400" border = "0" cellspacing = "1" 
                      cellpadding = "2">
                   
@@ -101,11 +92,7 @@ if(isset($_post['add']))
                   </table>
                </form>
             
-        <?php
-   }
-		 	
-      ?>
-   
+    <?php } ?>
    </body>
 </html>
 <html>
