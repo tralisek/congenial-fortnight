@@ -26,13 +26,23 @@
 		     $jidlo = $html->find("div[class=article]", $x); 
 			 $jidloA[$x] = $html->find("div[class=article]", $x);
 		   
-			 $nerozvazaneJidlo = $jidloA[$x];
-			 $jidloSQL = strip_tags($nerozvazaneJidlo);
-			 $nerozvazanaCena = $cenaA[$x];
-			 $cenaSQL = strip_tags($nerozvazanaCena);
+			
+			 $jidloSQL = strip_tags($jidloA[$x]);
+			 $cenaSQL = strip_tags($cenaA[$x]);
+			 //	echo $jidloSQL . "<br>";
+				//echo $cenaSQL . "<br>";
+			$jidloSQL = array(
+			   "id"    => $x,
+			   "popis" => "$jidloSQL[$x]",
+			   "cena"  => "$cenaSQL[$x]"
+			       			  );
 			  
-			 $sql = "insert into jidla (id, popis, cena)
-	              values ($x, '$jidloSQL', '$cenaSQL')";
+			 $sql = "insert into jidla ";
+			 
+			 $sql .= " (`".implode("`, `", array_keys($jidloSQL))."`)";
+			 
+			 $sql .= " VALUES ('".implode("', '", $jidloSQL)."') ";
+	             
 			 
 			 }  
      
